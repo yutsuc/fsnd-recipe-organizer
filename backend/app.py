@@ -9,9 +9,18 @@ setup_db(app)
 CORS(app)
 
 # ROUTES
+
+'''
+GET /recipes
+    it should be a public endpoint
+    it should contain only the recipe.short() data representation
+returns status code 200 and json {"success": True, "recipes": recipes} where recipes is the list of recipes
+    or appropriate status code indicating reason for failure
+'''
 @app.route("/recipes")
 def retrieve_recipes():
-    recipes = Recipe.get.all()
+    all_recipes = Recipe.get.all().order_by("title")
+    recipes = [r.short() for r in all_recipes]
 
     if len(recipes) == 0:
         abort(404)
@@ -21,27 +30,77 @@ def retrieve_recipes():
         "recipes": recipes,
     })
 
+'''
+GET /recipes-detail
+    it should require the "get:recipes-detail" permission
+    it should contain the drink.long() data representation
+returns status code 200 and json {"success": True, "recipes": recipes} where recipes is the list of recipes
+    or appropriate status code indicating reason for failure
+'''
+@app.route("/recipes-detail")
+@requires_auth("get:recipes-detail")
+def retrieve_recipes_detail():
+    all_recipes = Recipe.get.all().order_by("title")
+    recipes = [r.long() for r in all_recipes]
 
-@app.route("/recipes/<int:recipe_id>")
-def retrive_recipe(recipe_id):
-    recipe = Recipe.query.get(recipe_id)
-
-    if recipe_id is None:
+    if len(recipes) == 0:
         abort(404)
 
     return jsonify({
         "success": True,
-        "recipe": recipe,
+        "recipes": recipes,
     })
 
+'''
+POST /recipes
+    it should create a new row in the recipe table
+    it should require the "post:recipe permission
+    it should contain the drink.long() data representation
+returns status code 200 and json {"success": True, "recipes": recipe} where recipes is an array containing only the newly created recipe
+    or appropriate status code indicating reason for failure
+'''
+@app.route("/recipes", methods=["POST"])
+@requires_auth("post:recipe")
+def create_recipe():
+    recipe = Recipe.query.get(recipe_id)
+    #TODO: Update method
+
+    return jsonify({
+        "success": True,
+        "recipes": [recipe]
+    })
 
 '''
-DELETE /recipes/<int:recipe_id>
-    where <recipe_id> is the existing model id
-    it should respond with a 404 error if <recipe_id> is not found
-    it should delete the corresponding row for <recipe_id>
-    it should require the 'delete:recipe' permission
-returns status code 200 and json {"success": True, "delete": recipe_id} where recipe_id is the id of the deleted record
+PATCH /recipes/<id>
+    where <id> is the existing model id
+    it should respond with a 404 error if <id> is not found
+    it should update the corresponding row for <id>
+    it should require the "patch:recipes" permission
+returns status code 200 and json {"success": True, "recipes": recipe} where recipes is an array containing only the updated recipe
+    or appropriate status code indicating reason for failure
+'''
+@app.route("/recipes/<int:recipe_id", methods=["PATCH"])
+@requires_auth("patch:recipes")
+def update_recipe(recipe_id):
+    recipe = Recipe.query.get(recipe_id)
+
+    if recipe is None:
+        abort(404)
+
+    #TODO: Update method
+
+    return jsonify({
+        "success": True,
+        "recipes": [recipe]
+    })
+
+'''
+DELETE /recipes/<id>
+    where <id> is the existing model id
+    it should respond with a 404 error if <id> is not found
+    it should delete the corresponding row for <id>
+    it should require the "delete:recipe" permission
+returns status code 200 and json {"success": True, "delete": id where id is the id of the deleted record
     or appropriate status code indicating reason for failure
 '''
 @app.route("/recipes/<int:recipe_id>", methods=["DELETE"])
@@ -64,6 +123,7 @@ def delete_recipe(recipe_id):
 
 
 # Error Handling
+
 '''
 Error handling for 400 bad request
 '''
@@ -74,6 +134,17 @@ def bad_request(error):
         "error": 400,
         "message": "bad request"
     }), 400
+
+'''
+Error handler for 401 AuthError
+'''
+@app.errorhandler(401)
+def unauthorized(error):
+    return jsonify({
+        "success": False,
+        "error": 401,
+        "message": str(error)
+    }), 401
 
 '''
 Error handling for 404 not found

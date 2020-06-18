@@ -39,6 +39,28 @@ class Recipe(db.Model):
         return f"<Recipe id: {self.id}, title: {self.title}, ingridients: {json.loads(self.ingridients)}, instructions: {self.instructions} >"
 
     '''
+    short()
+        short form representation of the Recipe model
+    '''
+    def short(self):
+        return {
+            "id": self.id,
+            "title": self.title
+        }
+
+    '''
+    long()
+        long form representation of the Recipe model
+    '''
+    def long(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "ingridients": self.ingridients,
+            "instructions": self.instructions,
+        }
+
+    '''
     insert()
         inserts a new model into a database
         the model must have a unique id or null id
