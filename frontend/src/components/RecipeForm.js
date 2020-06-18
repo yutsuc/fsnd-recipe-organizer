@@ -1,19 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import Fab from "@material-ui/core/Fab";
 import SaveIcon from "@material-ui/icons/Save";
+import AddIcon from '@material-ui/icons/Add';
 import IngridientsTable from "./IngridientsTable";
-import { addRecipe } from "../actions";
-import { getRecipe } from "../utils/api";
+import { saveRecipe } from "../actions/recipes";
 
 class RecipeForm extends React.Component {
     static propTypes = {
-        id: PropTypes.number,
+        recipe: PropTypes.object,
     }
+
     state = {
         id: -1,
         recipeTitle: "",
@@ -22,11 +22,10 @@ class RecipeForm extends React.Component {
     }
 
     componentDidMount = () => {
-        const { id } = this.props;
-        if (id !== undefined) {
-            const recipe = getRecipe(id);
+        const { recipe } = this.props;
+        if (recipe !== undefined) {
             this.setState({
-                id: id,
+                id: recipe.id,
                 recipeTitle: recipe.title,
                 ingridients: recipe.ingridients,
                 instructions: recipe.instructions,
@@ -42,9 +41,10 @@ class RecipeForm extends React.Component {
 
     handleSaveRecipe = (e) => {
         e.preventDefault();
-        const { recipeTitle, ingridients, instructions } = this.state;
-        this.props.dispatch(addRecipe({ recipeTitle, ingridients, instructions }));
+        const { id, recipeTitle, ingridients, instructions } = this.state;
+        this.props.dispatch(saveRecipe(id, recipeTitle, ingridients, instructions));
         this.setState({
+            id: -1,
             recipeTitle: "",
             ingridients: [],
             instructions: "",
@@ -58,7 +58,7 @@ class RecipeForm extends React.Component {
     }
 
     render = () => {
-        const { recipeTitle, ingridients, instructions } = this.state;
+        const { id, recipeTitle, ingridients, instructions } = this.state;
         const { classes } = this.props;
         return (
             <form>
@@ -79,12 +79,12 @@ class RecipeForm extends React.Component {
                     rows={8}
                     onKeyDown={this.handleKeyDown}
                     multiline fullWidth />
-                <Fab className={classes.fab} aria-label="add"
+                <Fab className={classes.fab} aria-label="add-or-save-button"
                     color="primary"
                     type="submit"
                     disabled={!(recipeTitle && ingridients.length !== 0)}
                     onClick={(e) => this.handleSaveRecipe(e)}>
-                    <SaveIcon />
+                        {id === -1 ? <AddIcon /> : <SaveIcon />}
                 </Fab>
             </form>
         );
@@ -104,4 +104,4 @@ const styles = theme => ({
     },
 });
 
-export default connect()(withStyles(styles)(RecipeForm));
+export default withStyles(styles)(RecipeForm);

@@ -12,7 +12,7 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Typography from "@material-ui/core/Typography";
 
 const RecipesDrawer = (props) => {
-    const recipeTitles = useSelector(state => Object.keys(state).sort());
+    const recipes = useSelector(state => state.recipes);
     const classes = useStyles(props);
     const drawerItems = (
         <Fragment>
@@ -27,9 +27,9 @@ const RecipesDrawer = (props) => {
                     <ListItemIcon><AddCircleOutlineIcon /></ListItemIcon>
                     <ListItemText primary="Add Recipe" />
                 </ListItem>
-                {recipeTitles.map((r, i) => (
-                    <ListItem button key={i} component={Link} to={`/recipes/${i}`}>
-                        <ListItemText primary={r} />
+                {recipes.map( r => (
+                    <ListItem button key={r.id} component={Link} to={`/recipes/${r.id}`}>
+                        <ListItemText primary={r.title} />
                     </ListItem>
                 ))}
             </List>

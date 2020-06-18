@@ -1,14 +1,13 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import RecipeFrom from "./RecipeForm";
+import { useSelector } from "react-redux";
+import RecipeForm from "./RecipeForm";
 
 const Recipe = (props) => {
     const { id } = useParams();
+    const recipe = useSelector(state => state.recipes[id])
     return (
-        <div>
-            recipe {id}
-            <RecipeFrom id={id} />
-        </div>
+        <RecipeForm recipe={recipe} />
     )
 }
 

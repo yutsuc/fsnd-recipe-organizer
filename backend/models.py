@@ -34,6 +34,8 @@ class Recipe(db.Model):
     ingridients = db.Column(db.String(), nullable=False)
     # String Instructions
     instructions = db.Column(db.String(), nullable=True)
+    # Integer Owner
+    owner_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __repr__(self):
         return f"<Recipe id: {self.id}, title: {self.title}, ingridients: {json.loads(self.ingridients)}, instructions: {self.instructions} >"
@@ -96,3 +98,30 @@ class Recipe(db.Model):
     '''
     def update(self):
         db.session.commit()
+
+    '''
+    format()
+    '''
+    def format(self):
+        return {self.id: {
+            "id": self.id,
+            "title": self.title,
+            "ingridients": self.ingridients,
+            "instructions": self.instructions,
+        }}
+
+'''
+User
+    User entity, extends the base SQLAlchemy Model
+'''
+class User(db.Model):
+    __tablename__  = "user"
+    # Autoincrementing, unique primary key
+    id = db.Column(db.Integer, primary_key=True)
+    # String name
+    name = db.Column(db.String(), unique=True, nullable=False)
+    # One to many relationship
+    recipes = db.relationship(Recipe, db.backref("owner", lazy="dynamic", cascade="all, delete-orphan"))
+
+    def __repr__(self):
+        return f"<User id: {self.id}, name: {self.name} >"
