@@ -10,8 +10,6 @@ db = SQLAlchemy()
 setup_db(app)
     binds a flask application and a SQLAlchemy service
 '''
-
-
 def setup_db(app):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -21,13 +19,10 @@ def setup_db(app):
     # db.create_all() TODO: uncomment to create all db on initial setup
     migrate = Migrate(app, db)
 
-
 '''
 Recipe
     Recipe entity, extends the base SQLAlchemy Model
 '''
-
-
 class Recipe(db.Model):
     __tablename__ = "recipe"
     # Autoincrementing, unique primary key
@@ -52,7 +47,6 @@ class Recipe(db.Model):
             recipe = Recipe(title=req_title, ingridients=req_ingridients, instructions=req_instructions)
             recipe.insert()
     '''
-
     def insert(self):
         db.sesion.add(self)
         db.session.commit()
@@ -65,7 +59,6 @@ class Recipe(db.Model):
             recipe = Recipe.query.get(1)
             recipe.delete()
     '''
-
     def delete(self):
         db.session.remove(self)
         db.session.commit()
@@ -79,6 +72,5 @@ class Recipe(db.Model):
             recipe.title = 'Green Tea Tiramisu'
             recipe.update()
     '''
-
     def update(self):
         db.session.commit()

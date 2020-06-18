@@ -9,8 +9,6 @@ setup_db(app)
 CORS(app)
 
 # ROUTES
-
-
 @app.route("/recipes")
 def retrieve_recipes():
     recipes = Recipe.get.all()
@@ -46,8 +44,6 @@ DELETE /recipes/<int:recipe_id>
 returns status code 200 and json {"success": True, "delete": recipe_id} where recipe_id is the id of the deleted record
     or appropriate status code indicating reason for failure
 '''
-
-
 @app.route("/recipes/<int:recipe_id>", methods=["DELETE"])
 @requires_auth("delete:recipe")
 def delete_recipe(recipe_id):
@@ -67,6 +63,21 @@ def delete_recipe(recipe_id):
     })
 
 
+# Error Handling
+'''
+Error handling for 400 bad request
+'''
+@app.errorhandler(400)
+def bad_request(error):
+    return jsonify({
+        "success": False,
+        "error": 400,
+        "message": "bad request"
+    }), 400
+
+'''
+Error handling for 404 not found
+'''
 @app.errorhandler(404)
 def not_found(error):
     return jsonify({
@@ -75,7 +86,9 @@ def not_found(error):
         "message": "not found"
     }), 404
 
-
+'''
+Error handling for 422 unprocessable
+'''
 @app.errorhandler(422)
 def unprocessable(errpr):
     return jsonify({
@@ -83,3 +96,15 @@ def unprocessable(errpr):
         "error": 422,
         "message": "unprocessable"
     }), 422
+
+'''
+Error handling for 500 internal server error
+'''
+@app.errorhandler(500)
+def internal_server_error(error):
+    return jsonify({
+        "success": False,
+        "error": 500,
+        "message": "internal server error"
+    }), 500
+
