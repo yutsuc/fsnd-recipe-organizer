@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -84,7 +85,7 @@ class RecipeForm extends React.Component {
                     type="submit"
                     disabled={!(recipeTitle && ingridients.length !== 0)}
                     onClick={(e) => this.handleSaveRecipe(e)}>
-                        {id === -1 ? <AddIcon /> : <SaveIcon />}
+                    {id === -1 ? <AddIcon /> : <SaveIcon />}
                 </Fab>
             </form>
         );
@@ -104,4 +105,4 @@ const styles = theme => ({
     },
 });
 
-export default withStyles(styles)(RecipeForm);
+export default connect()(withStyles(styles)(RecipeForm));

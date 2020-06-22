@@ -1,4 +1,5 @@
-const API_URL = "";
+const API_URL = "http://127.0.0.1:5000";
+const token = localStorage.getItem("jwt_token");
 
 export function _getRecipes() {
     fetch(`${API_URL}/recipes`, {
@@ -6,9 +7,13 @@ export function _getRecipes() {
     })
 }
 
-function _addRecipe(recipe) {
+async function _addRecipe(recipe, owner) {
     fetch(`${API_URL}/recipes`, {
         method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+
     })
 }
 
@@ -18,6 +23,9 @@ function _updateRecipe(recipe) {
     })
 }
 
-export function _saveRecipe(recipe, owner) {
-    // TODO: check ID for add/ update
+export async function _saveRecipe(recipe, owner) {
+    if (recipe.id === -1 )
+        return _addRecipe(recipe, owner)
+    else
+        return _updateRecipe(recipe, owner)
 }

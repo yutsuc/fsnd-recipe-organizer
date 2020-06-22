@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Switch, Route, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { AppBar, Toolbar, IconButton, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -10,11 +11,26 @@ import AddRecipe from "./AddRecipe";
 import Recipe from "./Recipe";
 import Profile from "./Profile";
 import PrivateRoute from "./PrivateRoute";
+import { setAuthedUser, clearAuthedUser } from "../actions/authedUser";
 
 const App = () => {
     const [mobileOpen, setMobileOpen] = useState(false);
-    const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+    const { isAuthenticated, loginWithRedirect, logout, getTokenSilently, user } = useAuth0();
     const classes = useStyles();
+    const dispatch = useDispatch()
+
+    if (isAuthenticated) {
+        getTokenSilently().then(token => localStorage.setItem("jwt_token", token));
+    }
+
+    if (user) {
+        dispatch(setAuthedUser(user.name));
+    }
+
+    const handleLogOut = () => {
+        dispatch(clearAuthedUser());
+        logout();
+    }
 
     return (
         <div className={classes.app}>
@@ -25,14 +41,14 @@ const App = () => {
                     </IconButton>
                     {!isAuthenticated && (<Button className={classes.loginButton} onClick={() => loginWithRedirect({})}>Log In</Button>)}
                     {isAuthenticated && (<Button className={classes.profileButton} component={Link} to="/profile">Profile</Button>)}
-                    {isAuthenticated && (<Button className={classes.logoutButton} onClick={() => logout()}>Log out</Button>)}
+                    {isAuthenticated && (<Button className={classes.logoutButton} onClick={handleLogOut}>Log out</Button>)}
                 </Toolbar>
             </AppBar>
             <RecipesDrawer open={mobileOpen} handleDrawerClose={() => setMobileOpen(!mobileOpen)} drawerWidth={drawerWidth} />
             <main className={classes.content}>
                 <div className={classes.toolbar} />
                 <Switch>
-                    <Route exact path="/"><Typography>Welcome to Recipe Organizer{isAuthenticated? "" : ", please log in to continue"}</Typography></Route>
+                    <Route exact path="/"><Typography>Welcome to Recipe Organizer{isAuthenticated ? "" : ", please log in to continue"}</Typography></Route>
                     <PrivateRoute exact path="/add" component={AddRecipe} />
                     <PrivateRoute exact path="/recipes/:id" component={Recipe} />
                     <PrivateRoute exact path="/profile" component={Profile} />
