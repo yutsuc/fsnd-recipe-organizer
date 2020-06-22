@@ -10,10 +10,12 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Typography from "@material-ui/core/Typography";
+import { useAuth0 } from "../utils/react-auth0-spa";
 
 const RecipesDrawer = (props) => {
     const recipes = useSelector(state => state.recipes);
     const classes = useStyles(props);
+    const { isAuthenticated } = useAuth0();
     const drawerItems = (
         <Fragment>
             <div className={classes.toolbar} style={{ textAlign: "center" }}>
@@ -23,15 +25,15 @@ const RecipesDrawer = (props) => {
                 <Typography variant="body1" style={{ color: "gray" }}>beta</Typography>
             </div>
             <List>
-                <ListItem button component={Link} to="/add">
+                {isAuthenticated && <ListItem button component={Link} to="/add">
                     <ListItemIcon><AddCircleOutlineIcon /></ListItemIcon>
                     <ListItemText primary="Add Recipe" />
-                </ListItem>
-                {recipes.map( r => (
+                </ListItem>}
+                {/* {recipes.map(r => (
                     <ListItem button key={r.id} component={Link} to={`/recipes/${r.id}`}>
                         <ListItemText primary={r.title} />
                     </ListItem>
-                ))}
+                ))} */}
             </List>
         </Fragment>
     );
