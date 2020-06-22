@@ -1,4 +1,5 @@
 {
     "domain": "jchenapp.auth0.com",
-    "clientId": "2tSfVzjzD2davT8LLT297zivBHx73PJR"
+    "clientId": "2tSfVzjzD2davT8LLT297zivBHx73PJR",
+    "audience": "http://127.0.0.1:5000"
 }
