@@ -7,6 +7,8 @@ export function _getRecipes() {
     }).then(response => response.json()).then(data => {
         if (data.success) {
             return data.recipes;
+        } else {
+            return [];
         }
     }).catch(error => {
         console.log(error)
@@ -22,6 +24,8 @@ export function _getRecipesDetail() {
     }).then(response => response.json()).then(data => {
         if (data.success) {
             return data.recipes;
+        } else {
+            return [];
         }
     }).catch(error => {
         console.log(error)

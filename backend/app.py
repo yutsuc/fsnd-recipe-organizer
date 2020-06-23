@@ -76,9 +76,9 @@ def create_recipe():
             abort(422)
 
     title = recipe.get("recipeTitle")
-    ingridients = json.dumps(recipe.get("ingridients", ""))
+    ingredients = json.dumps(recipe.get("ingredients", ""))
     instructions = recipe.get("instructions")
-    recipe = Recipe(title=title, ingridients=ingridients, instructions=instructions, owner_id=user.id)
+    recipe = Recipe(title=title, ingredients=ingredients, instructions=instructions, owner_id=user.id)
 
     try:
         recipe.insert()
@@ -110,7 +110,7 @@ def update_recipe(recipe_id):
 
     data = request.get_json()
     recipe.title = data.get("recipeTitle")
-    recipe.ingridients = json.dumps(data.get("ingridients", ""))
+    recipe.ingredients = json.dumps(data.get("ingredients", ""))
     recipe.instructions = data.get("instructions")
 
     try:

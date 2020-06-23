@@ -8,7 +8,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Fab from "@material-ui/core/Fab";
 import SaveIcon from "@material-ui/icons/Save";
 import AddIcon from '@material-ui/icons/Add';
-import IngridientsTable from "./IngridientsTable";
+import IngredientsTable from "./IngredientsTable";
 import { saveRecipe } from "../actions/recipes";
 import { getPermissions } from "../utils/auth";
 
@@ -20,7 +20,7 @@ class RecipeForm extends React.Component {
     state = {
         id: -1,
         recipeTitle: "",
-        ingridients: [],
+        ingredients: [],
         instructions: "",
     }
 
@@ -30,7 +30,7 @@ class RecipeForm extends React.Component {
             this.setState({
                 id: recipe.id,
                 recipeTitle: recipe.title,
-                ingridients: recipe.ingridients,
+                ingredients: recipe.ingredients,
                 instructions: recipe.instructions,
             });
         }
@@ -41,7 +41,7 @@ class RecipeForm extends React.Component {
             this.setState({
                 id: this.props.recipe.id,
                 recipeTitle: this.props.recipe.title,
-                ingridients: this.props.recipe.ingridients,
+                ingredients: this.props.recipe.ingredients,
                 instructions: this.props.recipe.instructions,
             });
         }
@@ -51,21 +51,21 @@ class RecipeForm extends React.Component {
         this.setState({
             id: -1,
             recipeTitle: "",
-            ingridients: [],
+            ingredients: [],
             instructions: "",
         });
     }
 
-    handleSaveIngridient = (ingridient) => {
+    handleSaveIngredient = (ingredient) => {
         this.setState(prevState => ({
-            ingridients: prevState.ingridients.concat([ingridient])
+            ingredients: prevState.ingredients.concat([ingredient])
         }));
     }
 
     handleSaveRecipe = (e) => {
         e.preventDefault();
-        const { id, recipeTitle, ingridients, instructions } = this.state;
-        this.props.dispatch(saveRecipe(id, recipeTitle, ingridients, instructions));
+        const { id, recipeTitle, ingredients, instructions } = this.state;
+        this.props.dispatch(saveRecipe(id, recipeTitle, ingredients, instructions));
         this.props.history.push("/");
     }
 
@@ -76,7 +76,7 @@ class RecipeForm extends React.Component {
     }
 
     render = () => {
-        const { id, recipeTitle, ingridients, instructions } = this.state;
+        const { id, recipeTitle, ingredients, instructions } = this.state;
         const { classes } = this.props;
         const canUpdate = !(id !== -1 && !getPermissions().includes("patch:recipes"));
         return (
@@ -87,9 +87,9 @@ class RecipeForm extends React.Component {
                     onChange={(e) => this.setState({ recipeTitle: e.target.value })}
                     disabled= {!canUpdate}
                     required fullWidth />
-                <div className={classes.ingridients} >
-                    <InputLabel>Ingridients *</InputLabel>
-                    {ingridients &&<IngridientsTable ingridients={ingridients} saveIngridient={this.handleSaveIngridient} canEdit={canUpdate} />}
+                <div className={classes.ingredients} >
+                    <InputLabel>Ingredients *</InputLabel>
+                    {ingredients &&<IngredientsTable ingredients={ingredients} saveIngredient={this.handleSaveIngredient} canEdit={canUpdate} />}
                 </div>
                 <TextField
                     margin="dense"
@@ -103,7 +103,7 @@ class RecipeForm extends React.Component {
                 <Fab className={classes.fab} aria-label="add-or-save-button"
                     color="primary"
                     type="submit"
-                    disabled={!(recipeTitle && ingridients && ingridients.length !== 0) || !canUpdate}
+                    disabled={!(recipeTitle && ingredients && ingredients.length !== 0) || !canUpdate}
                     onClick={(e) => this.handleSaveRecipe(e)}>
                     {id === -1 ? <AddIcon /> : <SaveIcon />}
                 </Fab>
@@ -113,7 +113,7 @@ class RecipeForm extends React.Component {
 }
 
 const styles = theme => ({
-    ingridients: {
+    ingredients: {
         marginTop: theme.spacing(2),
     },
     fab: {

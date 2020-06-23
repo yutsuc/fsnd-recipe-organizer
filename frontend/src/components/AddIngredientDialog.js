@@ -7,10 +7,10 @@ import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 
-class AddIngridientDialog extends React.Component {
+class AddIngredientDialog extends React.Component {
     static propTypes = {
         open: PropTypes.bool.isRequired,
-        saveIngridient: PropTypes.func.isRequired,
+        saveIngredient: PropTypes.func.isRequired,
         closeDialog: PropTypes.func.isRequired,
     }
 
@@ -22,7 +22,7 @@ class AddIngridientDialog extends React.Component {
 
     handleSave = () => {
         const { name, quantity, unit } = this.state;
-        this.props.saveIngridient({ name, quantity, unit });
+        this.props.saveIngredient({ name, quantity, unit });
         this.handleClose();
     }
 
@@ -40,7 +40,7 @@ class AddIngridientDialog extends React.Component {
         const { name, quantity, unit } = this.state;
         return (
             <Dialog open={open} onClose={this.handleClose}>
-                <DialogTitle>Add Ingridient</DialogTitle>
+                <DialogTitle>Add Ingredient</DialogTitle>
                 <DialogContent>
                     <TextField autoFocus margin="dense"
                         label="Name"
@@ -73,4 +73,4 @@ class AddIngridientDialog extends React.Component {
     }
 }
 
-export default AddIngridientDialog;
+export default AddIngredientDialog;

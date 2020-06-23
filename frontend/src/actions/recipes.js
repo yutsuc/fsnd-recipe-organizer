@@ -48,10 +48,10 @@ export function getRecipeDetails() {
     };
 }
 
-export function saveRecipe(id, recipeTitle, ingridients, instructions) {
+export function saveRecipe(id, recipeTitle, ingredients, instructions) {
     return (dispatch, getState) => {
         const authedUser = getState().authedUser;
-        return _saveRecipe({ id, recipeTitle, ingridients, instructions }, authedUser).then(recipe => {
+        return _saveRecipe({ id, recipeTitle, ingredients, instructions }, authedUser).then(recipe => {
             if (id === -1)
                 dispatch(addRecipe(recipe));
             else

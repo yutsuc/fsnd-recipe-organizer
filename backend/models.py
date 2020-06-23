@@ -31,14 +31,14 @@ class Recipe(db.Model):
     title = db.Column(db.String(120), unique=True, nullable=False)
     # the ingredients blob - this stores a lazy json blob
     # the required datatype is [{'name': string, 'quantity':number, 'unit':string}]
-    ingridients = db.Column(db.String(), nullable=False)
+    ingredients = db.Column(db.String(), nullable=False)
     # String Instructions
     instructions = db.Column(db.String(), nullable=True)
     # Integer Owner
     owner_id = db.Column(db.Integer, db.ForeignKey("appuser.id", ondelete="CASCADE"))
 
     def __repr__(self):
-        return f"<Recipe id: {self.id}, title: {self.title}, ingridients: {json.loads(self.ingridients)}, instructions: {self.instructions}, owner_id: {self.owner_id} >"
+        return f"<Recipe id: {self.id}, title: {self.title}, ingredients: {json.loads(self.ingredients)}, instructions: {self.instructions}, owner_id: {self.owner_id} >"
 
     '''
     short()
@@ -58,7 +58,7 @@ class Recipe(db.Model):
         return {
             "id": self.id,
             "title": self.title,
-            "ingridients": json.loads(self.ingridients),
+            "ingredients": json.loads(self.ingredients),
             "instructions": self.instructions,
             "owner_id": self.owner_id,
         }
@@ -69,7 +69,7 @@ class Recipe(db.Model):
         the model must have a unique id or null id
         the model must have a unique title
         EXAMPLE
-            recipe = Recipe(title=req_title, ingridients=req_ingridients, instructions=req_instructions)
+            recipe = Recipe(title=req_title, ingredients=req_ingredients, instructions=req_instructions)
             recipe.insert()
     '''
     def insert(self):
@@ -99,17 +99,6 @@ class Recipe(db.Model):
     '''
     def update(self):
         db.session.commit()
-
-    # '''
-    # format()
-    # '''
-    # def format(self):
-    #     return {self.id: {
-    #         "id": self.id,
-    #         "title": self.title,
-    #         "ingridients": self.ingridients,
-    #         "instructions": self.instructions,
-    #     }}
 
 '''
 AppUser

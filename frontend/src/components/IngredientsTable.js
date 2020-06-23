@@ -9,33 +9,33 @@ import TableBody from "@material-ui/core/TableBody";
 import Button from "@material-ui/core/Button";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import PropTypes from "prop-types";
-import AddIngridientDialog from "./AddIngridientDialog";
+import AddIngredientDialog from "./AddIngredientDialog";
 
-class IngridientsTable extends React.Component {
+class IngredientsTable extends React.Component {
     static propTypes = {
-        ingridients: PropTypes.array.isRequired,
-        saveIngridient: PropTypes.func.isRequired,
+        ingredients: PropTypes.array.isRequired,
+        saveIngredient: PropTypes.func.isRequired,
         canEdit: PropTypes.bool.isRequired,
     }
 
     state = {
-        openAddIngridientDialog: false,
+        openAddIngredientDialog: false,
     }
 
     render = () => {
-        const { classes, ingridients, saveIngridient, canEdit } = this.props;
-        const { openAddIngridientDialog } = this.state;
+        const { classes, ingredients, saveIngredient, canEdit } = this.props;
+        const { openAddIngredientDialog } = this.state;
         return (
             <div>
                 <Button
                     startIcon={<AddCircleOutlineIcon />}
-                    className={classes.addIngridientBtn}
-                    onClick={() => this.setState({ openAddIngridientDialog: true })}
+                    className={classes.addIngredientBtn}
+                    onClick={() => this.setState({ openAddIngredientDialog: true })}
                     disabled={!canEdit}
                 >
-                    Add Ingridient
+                    Add Ingredient
                 </Button>
-                <AddIngridientDialog open={openAddIngridientDialog} saveIngridient={saveIngridient} closeDialog={() => this.setState({ openAddIngridientDialog: false })} />
+                <AddIngredientDialog open={openAddIngredientDialog} saveIngredient={saveIngredient} closeDialog={() => this.setState({ openAddIngredientDialog: false })} />
                 <TableContainer className={classes.tableContainer}>
                     <Table>
                         <TableHead>
@@ -46,7 +46,7 @@ class IngridientsTable extends React.Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {ingridients && ingridients.map((ing, index) => (
+                            {ingredients && ingredients.map((ing, index) => (
                                 <TableRow key={index}>
                                     <TableCell component="th" scope="row">{ing.name}</TableCell>
                                     <TableCell align="right">{ing.quantity}</TableCell>
@@ -67,10 +67,10 @@ const styles = theme => ({
         minWidth: "100%",
         width: "max-content",
     },
-    addIngridientBtn: {
+    addIngredientBtn: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
     }
 });
 
-export default withStyles(styles)(IngridientsTable);
+export default withStyles(styles)(IngredientsTable);
