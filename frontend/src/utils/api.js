@@ -5,7 +5,7 @@ export function _getRecipes() {
     return fetch(`${API_URL}/recipes`, {
         method: "GET"
     }).then(response => response.json()).then(data => {
-        if(data.success) {
+        if (data.success) {
             return data.recipes;
         }
     }).catch(error => {
@@ -20,7 +20,7 @@ export function _getRecipesDetail() {
             Authorization: `Bearer ${token}`
         }
     }).then(response => response.json()).then(data => {
-        if(data.success) {
+        if (data.success) {
             return data.recipes;
         }
     }).catch(error => {
@@ -29,27 +29,57 @@ export function _getRecipesDetail() {
 }
 
 function _addRecipe(recipe, owner) {
-    fetch(`${API_URL}/recipes`, {
+    return fetch(`${API_URL}/recipes`, {
         method: "POST",
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ recipe, owner })
+    }).then(response => response.json()).then(data => {
+        if (data.success) {
+            return data.recipe;
         }
-    }).then(res => {
-
     }).catch(error => {
-
+        console.log(error)
     });
 }
 
 function _updateRecipe(recipe) {
-    fetch(`${API_URL}/recipes`, {
+    return fetch(`${API_URL}/recipes/${recipe.id}`, {
         method: "PATCH",
-    })
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(recipe)
+    }).then(response => response.json()).then(data => {
+        if (data.success) {
+            return data.recipe;
+        }
+    }).catch(error => {
+        console.log(error)
+    });
 }
 
-export async function _saveRecipe(recipe, owner) {
-    if (recipe.id === -1 )
+export function _saveRecipe(recipe, owner) {
+    if (recipe.id === -1)
         return _addRecipe(recipe, owner)
     else
-        return _updateRecipe(recipe, owner)
+        return _updateRecipe(recipe)
+}
+
+export function _deleteRecipe(id) {
+    return fetch(`${API_URL}/recipes/${id}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    }).then(response => response.json()).then(data => {
+        if (data.success) {
+            return data.delete;
+        }
+    }).catch(error => {
+        console.log(error)
+    });
 }

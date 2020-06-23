@@ -38,7 +38,7 @@ class Recipe(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey("appuser.id", ondelete="CASCADE"))
 
     def __repr__(self):
-        return f"<Recipe id: {self.id}, title: {self.title}, ingridients: {json.loads(self.ingridients)}, instructions: {self.instructions} >"
+        return f"<Recipe id: {self.id}, title: {self.title}, ingridients: {json.loads(self.ingridients)}, instructions: {self.instructions}, owner_id: {self.owner_id} >"
 
     '''
     short()
@@ -60,6 +60,7 @@ class Recipe(db.Model):
             "title": self.title,
             "ingridients": json.loads(self.ingridients),
             "instructions": self.instructions,
+            "owner_id": self.owner_id,
         }
 
     '''
@@ -72,7 +73,7 @@ class Recipe(db.Model):
             recipe.insert()
     '''
     def insert(self):
-        db.sesion.add(self)
+        db.session.add(self)
         db.session.commit()
 
     '''
@@ -84,7 +85,7 @@ class Recipe(db.Model):
             recipe.delete()
     '''
     def delete(self):
-        db.session.remove(self)
+        db.session.delete(self)
         db.session.commit()
 
     '''
@@ -125,3 +126,16 @@ class AppUser(db.Model):
 
     def __repr__(self):
         return f"<AppUser id: {self.id}, name: {self.name} >"
+    
+    '''
+    insert()
+        inserts a new model into a database
+        the model must have a unique id or null id
+        the model must have a name
+        EXAMPLE
+            appuser = AppUser(name=req_name)
+            appuser.insert()
+    '''
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()

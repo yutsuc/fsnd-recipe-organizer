@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -9,6 +10,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import AddIcon from '@material-ui/icons/Add';
 import IngridientsTable from "./IngridientsTable";
 import { saveRecipe } from "../actions/recipes";
+import { getPermissions } from "../utils/auth";
 
 class RecipeForm extends React.Component {
     static propTypes = {
@@ -64,6 +66,7 @@ class RecipeForm extends React.Component {
         e.preventDefault();
         const { id, recipeTitle, ingridients, instructions } = this.state;
         this.props.dispatch(saveRecipe(id, recipeTitle, ingridients, instructions));
+        this.props.history.push("/");
     }
 
     handleInstructionsChange = e => {
@@ -75,16 +78,18 @@ class RecipeForm extends React.Component {
     render = () => {
         const { id, recipeTitle, ingridients, instructions } = this.state;
         const { classes } = this.props;
+        const canUpdate = !(id !== -1 && !getPermissions().includes("patch:recipes"));
         return (
             <form>
                 <TextField autoFocus margin="dense"
                     label="Recipe Title"
                     value={recipeTitle}
                     onChange={(e) => this.setState({ recipeTitle: e.target.value })}
+                    disabled= {!canUpdate}
                     required fullWidth />
                 <div className={classes.ingridients} >
                     <InputLabel>Ingridients *</InputLabel>
-                    <IngridientsTable ingridients={ingridients} saveIngridient={this.handleSaveIngridient} />
+                    {ingridients &&<IngridientsTable ingridients={ingridients} saveIngridient={this.handleSaveIngridient} canEdit={canUpdate} />}
                 </div>
                 <TextField
                     margin="dense"
@@ -93,11 +98,12 @@ class RecipeForm extends React.Component {
                     onChange={(e) => this.handleInstructionsChange(e)}
                     rows={8}
                     onKeyDown={this.handleKeyDown}
+                    disabled= {!canUpdate}
                     multiline fullWidth />
                 <Fab className={classes.fab} aria-label="add-or-save-button"
                     color="primary"
                     type="submit"
-                    disabled={!(recipeTitle && ingridients && ingridients.length !== 0)}
+                    disabled={!(recipeTitle && ingridients && ingridients.length !== 0) || !canUpdate}
                     onClick={(e) => this.handleSaveRecipe(e)}>
                     {id === -1 ? <AddIcon /> : <SaveIcon />}
                 </Fab>
@@ -121,10 +127,9 @@ const styles = theme => ({
 
 const mapStateToProps = ({ recipes }, props) => {
     const { id } = props;
-    console.log(recipes && recipes.find(r => r.id === id));
     return {
         recipe: recipes && recipes.find(r => r.id === id)
     };
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(RecipeForm));
+export default connect(mapStateToProps)(withRouter(withStyles(styles)(RecipeForm)));

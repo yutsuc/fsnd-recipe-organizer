@@ -15,6 +15,7 @@ class IngridientsTable extends React.Component {
     static propTypes = {
         ingridients: PropTypes.array.isRequired,
         saveIngridient: PropTypes.func.isRequired,
+        canEdit: PropTypes.bool.isRequired,
     }
 
     state = {
@@ -22,11 +23,18 @@ class IngridientsTable extends React.Component {
     }
 
     render = () => {
-        const { classes, ingridients, saveIngridient } = this.props;
+        const { classes, ingridients, saveIngridient, canEdit } = this.props;
         const { openAddIngridientDialog } = this.state;
         return (
             <div>
-                <Button startIcon={<AddCircleOutlineIcon />} className={classes.addIngridientBtn} onClick={() => this.setState({ openAddIngridientDialog: true })}>Add Ingridient</Button>
+                <Button
+                    startIcon={<AddCircleOutlineIcon />}
+                    className={classes.addIngridientBtn}
+                    onClick={() => this.setState({ openAddIngridientDialog: true })}
+                    disabled={!canEdit}
+                >
+                    Add Ingridient
+                </Button>
                 <AddIngridientDialog open={openAddIngridientDialog} saveIngridient={saveIngridient} closeDialog={() => this.setState({ openAddIngridientDialog: false })} />
                 <TableContainer className={classes.tableContainer}>
                     <Table>

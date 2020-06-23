@@ -1,7 +1,7 @@
 from flask import Flask, request, abort, jsonify
 from flask_cors import CORS
-
-from models import Recipe, setup_db
+import json
+from models import AppUser, Recipe, setup_db
 from auth import requires_auth
 
 app = Flask(__name__)
@@ -54,20 +54,40 @@ def retrieve_recipes_detail():
 '''
 POST /recipes
     it should create a new row in the recipe table
-    it should require the "post:recipe permission
-    it should contain the drink.long() data representation
-returns status code 200 and json {"success": True, "recipes": recipe} where recipes is an array containing only the newly created recipe
+    it should require the "post:recipe" permission
+    it should contain the recipe.long() data representation
+returns status code 200 and json {"success": True, "recipe": recipe} where recipe is the newly created recipe
     or appropriate status code indicating reason for failure
 '''
 @app.route("/recipes", methods=["POST"])
 @requires_auth("post:recipe")
 def create_recipe():
-    recipe = Recipe.query.get(recipe_id)
-    #TODO: Update method
+    data = request.get_json()
+    recipe = data.get("recipe")
+    owner = data.get("owner")
+
+    user = AppUser.query.filter(AppUser.name == owner).first()
+
+    if user is None:
+        user = AppUser(name=owner)
+        try:
+            user.insert()
+        except:
+            abort(422)
+
+    title = recipe.get("recipeTitle")
+    ingridients = json.dumps(recipe.get("ingridients", ""))
+    instructions = recipe.get("instructions")
+    recipe = Recipe(title=title, ingridients=ingridients, instructions=instructions, owner_id=user.id)
+
+    try:
+        recipe.insert()
+    except:
+        abort(422)
 
     return jsonify({
         "success": True,
-        "recipes": [recipe]
+        "recipe": recipe.long(),
     })
 
 '''
@@ -76,7 +96,8 @@ PATCH /recipes/<id>
     it should respond with a 404 error if <id> is not found
     it should update the corresponding row for <id>
     it should require the "patch:recipes" permission
-returns status code 200 and json {"success": True, "recipes": recipe} where recipes is an array containing only the updated recipe
+    it should contain the recipe.long() data representation
+returns status code 200 and json {"success": True, "recipes": recipe} where recipe is the updated recipe
     or appropriate status code indicating reason for failure
 '''
 @app.route("/recipes/<int:recipe_id>", methods=["PATCH"])
@@ -87,11 +108,19 @@ def update_recipe(recipe_id):
     if recipe is None:
         abort(404)
 
-    #TODO: Update method
+    data = request.get_json()
+    recipe.title = data.get("recipeTitle")
+    recipe.ingridients = json.dumps(data.get("ingridients", ""))
+    recipe.instructions = data.get("instructions")
+
+    try:
+        recipe.update()
+    except:
+        abort(422)
 
     return jsonify({
         "success": True,
-        "recipes": [recipe]
+        "recipe": recipe.long(),
     })
 
 '''
@@ -113,7 +142,8 @@ def delete_recipe(recipe_id):
 
     try:
         recipe.delete()
-    except:
+    except Exception as err:
+        print(err)
         abort(422)
 
     return jsonify({

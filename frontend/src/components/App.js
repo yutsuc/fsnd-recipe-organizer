@@ -16,18 +16,17 @@ import { getPublicData, getRecipeDetails } from "../actions/recipes";
 
 const App = () => {
     const [mobileOpen, setMobileOpen] = useState(false);
-    const { isAuthenticated, loginWithRedirect, logout, getTokenSilently, user } = useAuth0();
+    const { isAuthenticated, loginWithRedirect, logout, getTokenSilently, user, loading } = useAuth0();
     const classes = useStyles();
     const dispatch = useDispatch()
 
-    if (isAuthenticated) {
+    if (!loading && isAuthenticated) {
         getTokenSilently().then(token => localStorage.setItem("jwt_token", token));
-    }
-
-    if (user) {
         dispatch(setAuthedUser(user.name));
         dispatch(getRecipeDetails());
-    } else {
+    }
+
+    if (!loading && !isAuthenticated) {
         dispatch(getPublicData());
     }
 
