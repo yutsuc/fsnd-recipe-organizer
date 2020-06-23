@@ -38,7 +38,7 @@ class IngridientsTable extends React.Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {ingridients.map((ing, index) => (
+                            {ingridients && ingridients.map((ing, index) => (
                                 <TableRow key={index}>
                                     <TableCell component="th" scope="row">{ing.name}</TableCell>
                                     <TableCell align="right">{ing.quantity}</TableCell>

@@ -15,8 +15,8 @@ def setup_db(app):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
-    # db.drop_all() TODO: uncomment to drop all db if requires re-setup
-    # db.create_all() TODO: uncomment to create all db on initial setup
+    # db.drop_all() # TODO: uncomment to drop all db if requires re-setup
+    # db.create_all() # TODO: uncomment to create all db on initial setup
     migrate = Migrate(app, db)
 
 '''
@@ -35,7 +35,7 @@ class Recipe(db.Model):
     # String Instructions
     instructions = db.Column(db.String(), nullable=True)
     # Integer Owner
-    owner_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    owner_id = db.Column(db.Integer, db.ForeignKey("appuser.id", ondelete="CASCADE"))
 
     def __repr__(self):
         return f"<Recipe id: {self.id}, title: {self.title}, ingridients: {json.loads(self.ingridients)}, instructions: {self.instructions} >"
@@ -58,7 +58,7 @@ class Recipe(db.Model):
         return {
             "id": self.id,
             "title": self.title,
-            "ingridients": self.ingridients,
+            "ingridients": json.loads(self.ingridients),
             "instructions": self.instructions,
         }
 
@@ -99,29 +99,29 @@ class Recipe(db.Model):
     def update(self):
         db.session.commit()
 
-    '''
-    format()
-    '''
-    def format(self):
-        return {self.id: {
-            "id": self.id,
-            "title": self.title,
-            "ingridients": self.ingridients,
-            "instructions": self.instructions,
-        }}
+    # '''
+    # format()
+    # '''
+    # def format(self):
+    #     return {self.id: {
+    #         "id": self.id,
+    #         "title": self.title,
+    #         "ingridients": self.ingridients,
+    #         "instructions": self.instructions,
+    #     }}
 
 '''
-User
-    User entity, extends the base SQLAlchemy Model
+AppUser
+    AppUser entity, extends the base SQLAlchemy Model
 '''
-class User(db.Model):
-    __tablename__  = "user"
+class AppUser(db.Model):
+    __tablename__  = "appuser"
     # Autoincrementing, unique primary key
     id = db.Column(db.Integer, primary_key=True)
     # String name
     name = db.Column(db.String(), unique=True, nullable=False)
     # One to many relationship
-    recipes = db.relationship(Recipe, db.backref("owner", lazy="dynamic", cascade="all, delete-orphan"))
+    recipes = db.relationship(Recipe, single_parent=True, backref=db.backref("owner", lazy="joined"))
 
     def __repr__(self):
-        return f"<User id: {self.id}, name: {self.name} >"
+        return f"<AppUser id: {self.id}, name: {self.name} >"

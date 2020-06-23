@@ -19,7 +19,7 @@ returns status code 200 and json {"success": True, "recipes": recipes} where rec
 '''
 @app.route("/recipes")
 def retrieve_recipes():
-    all_recipes = Recipe.get.all().order_by("title")
+    all_recipes = Recipe.query.order_by("title").all()
     recipes = [r.short() for r in all_recipes]
 
     if len(recipes) == 0:
@@ -40,7 +40,7 @@ returns status code 200 and json {"success": True, "recipes": recipes} where rec
 @app.route("/recipes-detail")
 @requires_auth("get:recipes-detail")
 def retrieve_recipes_detail():
-    all_recipes = Recipe.get.all().order_by("title")
+    all_recipes = Recipe.query.order_by("title").all()
     recipes = [r.long() for r in all_recipes]
 
     if len(recipes) == 0:
@@ -79,7 +79,7 @@ PATCH /recipes/<id>
 returns status code 200 and json {"success": True, "recipes": recipe} where recipes is an array containing only the updated recipe
     or appropriate status code indicating reason for failure
 '''
-@app.route("/recipes/<int:recipe_id", methods=["PATCH"])
+@app.route("/recipes/<int:recipe_id>", methods=["PATCH"])
 @requires_auth("patch:recipes")
 def update_recipe(recipe_id):
     recipe = Recipe.query.get(recipe_id)

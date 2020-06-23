@@ -12,7 +12,7 @@ import { saveRecipe } from "../actions/recipes";
 
 class RecipeForm extends React.Component {
     static propTypes = {
-        recipe: PropTypes.object,
+        id: PropTypes.number,
     }
 
     state = {
@@ -34,6 +34,26 @@ class RecipeForm extends React.Component {
         }
     }
 
+    componentDidUpdate = (prevProps) => {
+        if (prevProps.id !== this.props.id) {
+            this.setState({
+                id: this.props.recipe.id,
+                recipeTitle: this.props.recipe.title,
+                ingridients: this.props.recipe.ingridients,
+                instructions: this.props.recipe.instructions,
+            });
+        }
+    }
+
+    componentWillUnmount = () => {
+        this.setState({
+            id: -1,
+            recipeTitle: "",
+            ingridients: [],
+            instructions: "",
+        });
+    }
+
     handleSaveIngridient = (ingridient) => {
         this.setState(prevState => ({
             ingridients: prevState.ingridients.concat([ingridient])
@@ -44,12 +64,6 @@ class RecipeForm extends React.Component {
         e.preventDefault();
         const { id, recipeTitle, ingridients, instructions } = this.state;
         this.props.dispatch(saveRecipe(id, recipeTitle, ingridients, instructions));
-        this.setState({
-            id: -1,
-            recipeTitle: "",
-            ingridients: [],
-            instructions: "",
-        });
     }
 
     handleInstructionsChange = e => {
@@ -83,7 +97,7 @@ class RecipeForm extends React.Component {
                 <Fab className={classes.fab} aria-label="add-or-save-button"
                     color="primary"
                     type="submit"
-                    disabled={!(recipeTitle && ingridients.length !== 0)}
+                    disabled={!(recipeTitle && ingridients && ingridients.length !== 0)}
                     onClick={(e) => this.handleSaveRecipe(e)}>
                     {id === -1 ? <AddIcon /> : <SaveIcon />}
                 </Fab>
@@ -105,4 +119,12 @@ const styles = theme => ({
     },
 });
 
-export default connect()(withStyles(styles)(RecipeForm));
+const mapStateToProps = ({ recipes }, props) => {
+    const { id } = props;
+    console.log(recipes && recipes.find(r => r.id === id));
+    return {
+        recipe: recipes && recipes.find(r => r.id === id)
+    };
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(RecipeForm));

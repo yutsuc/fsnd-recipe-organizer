@@ -1,21 +1,25 @@
 import React, { Fragment } from "react";
 import { useAuth0 } from "../utils/react-auth0-spa";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 
 const Profile = () => {
-    const { loading, user } = useAuth0();
-
-    if (loading || !user) {
-        return <div>Loading...</div>;
-    }
+    const { user } = useAuth0();
 
     return (
-        <Fragment>
-            <img src={user.picture} alt="Profile" />
-            <h2>{user.name}</h2>
-            <p>{user.nickname}</p>
-            <p>{user.email}</p>
-            <textarea style={{width: "100%", resize: "none"}}defaultValue={localStorage.getItem("jwt_token")} rows={5} readOnly />
-        </Fragment>
+        <div>
+            {user && <Fragment>
+                <img src={user.picture} alt="Profile" />
+                <Typography variant="h5">{user.name}</Typography>
+                <TextField multiline fullWidth disabled
+                    margin="normal"
+                    label="JWT Token"
+                    rows={5}
+                    defaultValue={localStorage.getItem("jwt_token")}
+                    variant="outlined"
+                />
+            </Fragment>}
+        </div>
     );
 };
 

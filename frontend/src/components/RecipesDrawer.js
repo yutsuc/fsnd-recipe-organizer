@@ -29,11 +29,11 @@ const RecipesDrawer = (props) => {
                     <ListItemIcon><AddCircleOutlineIcon /></ListItemIcon>
                     <ListItemText primary="Add Recipe" />
                 </ListItem>}
-                {/* {recipes.map(r => (
-                    <ListItem button key={r.id} component={Link} to={`/recipes/${r.id}`}>
+                {recipes.map(r => (
+                    <ListItem button key={r.id} component={Link} to={`/recipes/${r.id}`} disabled={!isAuthenticated}>
                         <ListItemText primary={r.title} />
                     </ListItem>
-                ))} */}
+                ))}
             </List>
         </Fragment>
     );

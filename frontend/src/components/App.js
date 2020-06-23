@@ -12,6 +12,7 @@ import Recipe from "./Recipe";
 import Profile from "./Profile";
 import PrivateRoute from "./PrivateRoute";
 import { setAuthedUser, clearAuthedUser } from "../actions/authedUser";
+import { getPublicData, getRecipeDetails } from "../actions/recipes";
 
 const App = () => {
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -25,6 +26,9 @@ const App = () => {
 
     if (user) {
         dispatch(setAuthedUser(user.name));
+        dispatch(getRecipeDetails());
+    } else {
+        dispatch(getPublicData());
     }
 
     const handleLogOut = () => {
