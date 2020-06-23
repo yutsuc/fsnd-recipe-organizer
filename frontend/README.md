@@ -1,68 +1,62 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Recipe Organizer
 
-## Available Scripts
+This app is the popular Would You Rather...? game. It allows you to create questions and see results for each question, and has a leaderboard that captures which user has been most active.
 
-In the project directory, you can run:
+## TL;DR
 
-### `npm start`
+To get started developing right away:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+* change to frontend folder with `cd frontend`
+* install all project dependencies with `npm install`
+* start the development server with `npm start`
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## What You're Getting
+```bash
+├── README.md # This file.
+├── package.json
+├── public
+│   ├── favicon.icon
+│   ├── index.html
+│   └── manifest.json
+└── src
+    ├── actions # Actions and action creators
+    │   ├── authedUser.js
+    │   └── recipes.js
+    ├── components
+    │   ├── App.js # Routes different paths to different components
+    │   ├── Dashboard.js # Displays a list of Questions separated by answered and unanswered
+    │   ├── Leaderboard.js # Displays a list of User Summary
+    │   ├── Login.js # User gets redirected to this page if they are not logged in
+    │   ├── Nav.js # Navigaton component that links to different components
+    │   ├── NewQuestion.js # Component for creating a new question
+    │   ├── Question.js # Displays question preview and a button to vote
+    │   ├── QuestionPage.js # Component for voting a single question or summary of the votes
+    │   ├── QuesitonSummary.js # Displays a question's votes for each option
+    │   ├── QuestionVote.js # Votes for the question
+    │   └── UserSummary.js # Displays # of questions answered and created by each user and their total score
+    ├── middleware # Redux-Thunk and logging action and state
+    │   ├── index.js
+    │   └── logger.js
+    ├── reducers # Handling various states returned from actions
+    │   ├── authedUser.js
+    │   ├── index.js
+    │   └── recipes.js
+    ├── utils
+    │   ├── api.js # API calls
+    │   └── react-auth0-spa.js # Auth0 context and hooks
+    ├── auth_config.json # Auth0 config
+    ├── index.css
+    └── index.js # Create Redux store, Auth0 Provider, Router
+```
 
-### `npm test`
+## Possible Imporovements
+- backend database
+- ability to create new user
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Create React App
 
-### `npm run build`
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). You can find more information on how to perform common tasks [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Licenses
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+This repository is licenced under [GNU GPLv3](https://spdx.org/licenses/GPL-3.0-or-later.html)
