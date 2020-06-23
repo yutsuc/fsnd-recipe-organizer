@@ -9,7 +9,10 @@ function parseJwt(token) {
     return JSON.parse(base64);
 };
 
-export function getPermissions(token=localStorage.getItem("jwt_token")) {
+export function getPermissions() {
+    const token = localStorage.getItem("jwt_token");
+    if (!token)
+        return [];
     const tokenObj = parseJwt(token);
     return tokenObj["permissions"];
 }

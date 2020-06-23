@@ -1,5 +1,4 @@
 const API_URL = "http://127.0.0.1:5000";
-const token = localStorage.getItem("jwt_token");
 
 export function _getRecipes() {
     return fetch(`${API_URL}/recipes`, {
@@ -16,6 +15,7 @@ export function _getRecipes() {
 }
 
 export function _getRecipesDetail() {
+    const token = localStorage.getItem("jwt_token");
     return fetch(`${API_URL}/recipes-detail`, {
         method: "GET",
         headers: {
@@ -33,6 +33,7 @@ export function _getRecipesDetail() {
 }
 
 function _addRecipe(recipe, owner) {
+    const token = localStorage.getItem("jwt_token");
     return fetch(`${API_URL}/recipes`, {
         method: "POST",
         headers: {
@@ -50,6 +51,7 @@ function _addRecipe(recipe, owner) {
 }
 
 function _updateRecipe(recipe) {
+    const token = localStorage.getItem("jwt_token");
     return fetch(`${API_URL}/recipes/${recipe.id}`, {
         method: "PATCH",
         headers: {
@@ -74,6 +76,7 @@ export function _saveRecipe(recipe, owner) {
 }
 
 export function _deleteRecipe(id) {
+    const token = localStorage.getItem("jwt_token");
     return fetch(`${API_URL}/recipes/${id}`, {
         method: "DELETE",
         headers: {

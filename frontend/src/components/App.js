@@ -21,9 +21,12 @@ const App = () => {
     const dispatch = useDispatch()
 
     if (!loading && isAuthenticated) {
-        getTokenSilently().then(token => localStorage.setItem("jwt_token", token));
-        dispatch(setAuthedUser(user.name));
-        dispatch(getRecipeDetails());
+        getTokenSilently()
+            .then(token => {
+                return Promise.resolve(localStorage.setItem("jwt_token", token))
+                        .then(() => dispatch(setAuthedUser(user.name)))
+                        .then(() => dispatch(getRecipeDetails()));
+            });
     }
 
     if (!loading && !isAuthenticated) {

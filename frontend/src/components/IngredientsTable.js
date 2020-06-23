@@ -31,7 +31,7 @@ class IngredientsTable extends React.Component {
                     startIcon={<AddCircleOutlineIcon />}
                     className={classes.addIngredientBtn}
                     onClick={() => this.setState({ openAddIngredientDialog: true })}
-                    disabled={!canEdit}
+                    style={canEdit ? { visibility: "visible" } : { visibility: "hidden" }}
                 >
                     Add Ingredient
                 </Button>

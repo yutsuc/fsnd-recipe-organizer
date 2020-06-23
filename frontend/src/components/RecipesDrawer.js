@@ -44,7 +44,7 @@ const RecipesDrawer = (props) => {
                 {recipes && recipes.map(r => (
                     <ListItem button key={r.id} component={Link} to={`/recipes/${r.id}`} disabled={!isAuthenticated}>
                         <ListItemText primary={r.title} />
-                        <IconButton aria-label="delete" hidden={!canDelete} onClick={(e) => handleDelete(e, r.id)}>
+                        <IconButton aria-label="delete" style={canDelete ? {visibility: "visible"} : {visibility: "hidden"}} onClick={(e) => handleDelete(e, r.id)}>
                             <DeleteIcon fontSize="small" />
                         </IconButton>
                     </ListItem>
