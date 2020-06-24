@@ -44,6 +44,21 @@ Flask-based. More information on how to run the dev server can be found: [`./bac
 
 > _tip_: if JWT tokens are expired, they can be obtained from the frontend `/profile`. Right-clicking the collection folder for user and admin, navigate to the authorization tab, and update the JWT in the token field
 
+## Testing with unittest
+If you're not already in the backend folder run `cd backend`
+
+Make sure database is set up before running the tests
+```
+createdb -U postgres recipe-organizer
+flask db upgrade
+psql recipe-organizer postgres < test_data.psql
+```
+To run the tests, run
+```
+source setup.sh
+python app_test.py
+```
+
 ## API Reference
 ### Error Handling
 Errors are returned as JSON object in the following format
