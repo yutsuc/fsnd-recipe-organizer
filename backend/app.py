@@ -33,7 +33,7 @@ def retrieve_recipes():
 '''
 GET /recipes-detail
     it should require the "get:recipes-detail" permission
-    it should contain the drink.long() data representation
+    it should contain the recipe.long() data representation
 returns status code 200 and json {"success": True, "recipes": recipes} where recipes is the list of recipes
     or appropriate status code indicating reason for failure
 '''
@@ -91,10 +91,10 @@ def create_recipe():
     })
 
 '''
-PATCH /recipes/<id>
-    where <id> is the existing model id
-    it should respond with a 404 error if <id> is not found
-    it should update the corresponding row for <id>
+PATCH /recipes/<recipe_id>
+    where <recipe_id> is the existing model id
+    it should respond with a 404 error if <recipe_id> is not found
+    it should update the corresponding row for <recipe_id>
     it should require the "patch:recipes" permission
     it should contain the recipe.long() data representation
 returns status code 200 and json {"success": True, "recipes": recipe} where recipe is the updated recipe
@@ -124,10 +124,10 @@ def update_recipe(recipe_id):
     })
 
 '''
-DELETE /recipes/<id>
-    where <id> is the existing model id
-    it should respond with a 404 error if <id> is not found
-    it should delete the corresponding row for <id>
+DELETE /recipes/<recipe_id>
+    where <recipe_id> is the existing model id
+    it should respond with a 404 error if <recipe_id> is not found
+    it should delete the corresponding row for <recipe_id>
     it should require the "delete:recipe" permission
 returns status code 200 and json {"success": True, "delete": id where id is the id of the deleted record
     or appropriate status code indicating reason for failure
