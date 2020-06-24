@@ -52,17 +52,34 @@ Setting the `FLASK_DEBUG` variable to `True` will detect file changes and restar
 
 Setting the `FLASK_APP` variable to `app.py` directs flask to use the `app.py` file to find the application. 
 
-## Testing
-To run the tests, run
-```
-python test_app.py
-```
+
+## Setup Auth0
+
+1. Create a new Auth0 Account
+2. Select a unique tenant domain
+3. Create a new, single page web application
+4. Create a new API
+    - in API Settings:
+        - Enable RBAC
+        - Enable Add Permissions in the Access Token
+5. Create new API permissions:
+    - `get:recipes-detail`
+    - `post:recipe`
+    - `patch:recipes`
+    - `delete:recipe`
+6. Create new roles for:
+    - User
+        - can `get:recipes-detail`
+    - Admin
+        - can perform all actions
+7. Test your endpoints with [Postman](https://getpostman.com)
+    - Register 2 users - assign the User role to one and Admin role to the other
+    - Sign into each account and make note of the JWT (can be found on frontend `/profile`)
+    - Import the postman collection `./backend/postman_test_collection.json`
+    - Right-clicking the collection folder for user and admin, navigate to the authorization tab, and including the JWT in the token field (you should have noted these JWTs).
+    - Run the collection and correct any errors.
 
 ## API Reference
-### Getting Started
-The backend app is hosted at the default URL `http://127.0.0.1:5000`
-
-
 ### Error Handling
 Errors are returned as JSON object in the following format
 ```
