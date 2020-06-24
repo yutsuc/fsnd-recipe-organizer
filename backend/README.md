@@ -72,7 +72,7 @@ Setting the `FLASK_APP` variable to `app.py` directs flask to use the `app.py` f
     - `delete:recipe`
 6. Create new roles for:
     - User
-        - can `get:recipes-detail`
+        - can `get:recipes-detail`, `post:recipe`
     - Admin
         - can perform all actions
 7. Test your endpoints with [Postman](https://getpostman.com)

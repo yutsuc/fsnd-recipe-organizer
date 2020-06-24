@@ -47,8 +47,9 @@ Flask-based. More information on how to run the dev server can be found: [`./bac
 ## Testing with unittest
 If you're not already in the backend folder run `cd backend`
 
-Make sure database is set up before running the tests
+Make sure database and dependencies are set up before running the tests
 ```
+pip install -r requirements.txt
 createdb -U postgres recipe-organizer
 flask db upgrade
 psql recipe-organizer postgres < test_data.psql

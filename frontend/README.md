@@ -1,6 +1,6 @@
 # Recipe Organizer Frontend
 
-This app allows you to create new recipe. Admin can delete and update recipes
+Development frontend is hosted on http://localhost:3000/
 
 > _tip_: this frontend is designed to work with [Flask-based Backend](../backend). It is recommended you stand up the backend first, test using Postman, and then the frontend should integrate smoothly.
 
@@ -9,7 +9,7 @@ This app allows you to create new recipe. Admin can delete and update recipes
 To get started developing right away:
 
 * change to frontend folder with `cd frontend`
-* download and install [npm and npm](https://www.npmjs.com/get-npm)
+* download and install [npm and node](https://www.npmjs.com/get-npm)
 * install all project dependencies with `npm install`
 * update Auth0 variables [`.src/auth_config.json`](./src/auth_config.json)
 * start the development server with `npm start`
