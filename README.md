@@ -29,9 +29,11 @@ Admins can:
 
 ### Frontend
 
-React-based. More information can be found: [`./frontend/`](./frontend/README.md)
+React-based. More information on how to run locally can be found: [`./frontend/`](./frontend/README.md)
 
 ### Backend
+
+Hosted on https://recipe-organizer-api.herokuapp.com/
 
 Flask-based. More information can be found: [`./backend/`](./backend/README.md)
 

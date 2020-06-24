@@ -2,6 +2,8 @@
 
 ## Getting Started with Development
 
+Development API is hosted on http://127.0.0.1:5000
+
 ### Installing Dependencies
 
 #### Python 3.8
@@ -75,9 +77,10 @@ Setting the `FLASK_APP` variable to `app.py` directs flask to use the `app.py` f
 7. Test your endpoints with [Postman](https://getpostman.com)
     - Register 2 users - assign the User role to one and Admin role to the other
     - Sign into each account and make note of the JWT (can be found on frontend `/profile`)
-    - Import the postman collection `./backend/postman_test_collection.json`
-    - Right-clicking the collection folder for user and admin, navigate to the authorization tab, and including the JWT in the token field (you should have noted these JWTs).
-    - Run the collection and correct any errors.
+    - Import the postman collection `./backend/recipe-organizer-api.postman_collection.json`
+    - Change the host url in collection variable to `http://127.0.0.1:5000`
+    - Right-clicking the collection folder for user and admin, navigate to the authorization tab, and including the JWT in the token field (you should have noted these JWTs)
+    - Run the collection and correct any errors
 
 ## API Reference
 ### Error Handling
@@ -177,7 +180,7 @@ The API will return three error types when the requests fail
         "recipeTitle": "Pancakes",
         "ingredients": [
             {"name": "pancake mix", "quantity": 1, "unit": "cup"},
-            {"name": "water or milk", "quantity": 2/3, "unit": "cup"},
+            {"name": "water or milk", "quantity": "2/3", "unit": "cup"}
         ],
         "instructions": "Whisk together pancake mix and water. Let batter sit for 2 minutes. Heat pancake griddle to 375F. Pour in batter. Cook for 1-1.5 minutes per side"
     },
@@ -197,7 +200,7 @@ The API will return three error types when the requests fail
         "title": "Pancakes",
         "ingredients": [
             {"name": "pancake mix", "quantity": 1, "unit": "cup"},
-            {"name": "water or milk", "quantity": 2/3, "unit": "cup"},
+            {"name": "water or milk", "quantity": "2/3", "unit": "cup"}
         ],
         "instructions": "Whisk together pancake mix and water. Let batter sit for 2 minutes. Heat pancake griddle to 375F. Pour in batter. Cook for 1-1.5 minutes per side",
         "owner_id": 2
@@ -216,14 +219,12 @@ The API will return three error types when the requests fail
     
 ```
 {
-    "recipe": {
-        "recipeTitle": "Pancakes",
-        "ingredients": [
-            {"name": "pancake mix", "quantity": 1, "unit": "cup"},
-            {"name": "water", "quantity": 2/3, "unit": "cup"},
-        ],
-        "instructions": "Whisk together pancake mix and water. Let batter sit for 2 minutes. Heat pancake griddle to 375F. Pour in batter. Cook for 1-1.5 minutes per side"
-    }
+    "recipeTitle": "Pancakes",
+    "ingredients": [
+        {"name": "pancake mix", "quantity": 1, "unit": "cup"},
+        {"name": "water", "quantity": "2/3", "unit": "cup"}
+    ],
+    "instructions": "Whisk together pancake mix and water. Let batter sit for 2 minutes. Heat pancake griddle to 375F. Pour in batter. Cook for 1-1.5 minutes per side"
 }
 ```
 * Returns: 
@@ -239,7 +240,7 @@ The API will return three error types when the requests fail
         "title": "Pancakes",
         "ingredients": [
             {"name": "pancake mix", "quantity": 1, "unit": "cup"},
-            {"name": "water", "quantity": 2/3, "unit": "cup"},
+            {"name": "water", "quantity": "2/3", "unit": "cup"}
         ],
         "instructions": "Whisk together pancake mix and water. Let batter sit for 2 minutes. Heat pancake griddle to 375F. Pour in batter. Cook for 1-1.5 minutes per side",
         "owner_id": 2
