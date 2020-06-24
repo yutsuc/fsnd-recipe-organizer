@@ -1,0 +1,700 @@
+{
+	"info": {
+		"_postman_id": "983b35ca-eb0e-4c0c-97f6-f224bc20461e",
+		"name": "recipe-organizer-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "public",
+			"item": [
+				{
+					"name": "/recipes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2a03028f-1a03-42c1-b60e-9c6d27ec344a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"value contains recipes array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.recipes).to.be.an('array')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/recipes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/recipes-detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8fc410c1-ddc9-4cde-8f42-8845160033d9",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/recipes-detail",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipes-detail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/recipes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "08dc3e7e-5c3d-4e0a-99ef-8ecf6cf34c2d",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"recipe\": {\r\n        \"recipeTitle\": \"Pancakes from public\",\r\n        \"ingredients\": [\r\n            {\"name\": \"pancake mix\", \"quantity\": 1, \"unit\": \"cup\"},\r\n            {\"name\": \"water or milk\", \"quantity\": \"2/3\", \"unit\": \"cup\"}\r\n        ],\r\n        \"instructions\": \"Whisk together pancake mix and water. Let batter sit for 2 minutes. Heat pancake griddle to 375F. Pour in batter. Cook for 1-1.5 minutes per side\"\r\n    },\r\n    \"owner\": \"owner@recipeowner.com\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/recipes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/recipes/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "740285e5-c3d0-4604-94ed-34db1aa54671",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"recipeTitle\": \"Pancakes for public\",\r\n    \"ingredients\": [\r\n        {\"name\": \"pancake mix\", \"quantity\": 1, \"unit\": \"cup\"},\r\n        {\"name\": \"water\", \"quantity\": \"2/3\", \"unit\": \"cup\"}\r\n    ],\r\n    \"instructions\": \"Whisk together pancake mix and water. Let batter sit for 2 minutes. Heat pancake griddle to 375F. Pour in batter. Cook for 1-1.5 minutes per side\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/recipes/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/recipes/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d529eed0-4243-4f4a-8639-e96617390829",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/recipes/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "/recipes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d33c8ae2-f0e8-4f50-92ea-f0211eb6c296",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"value contains recipes array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.recipes).to.be.an('array')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/recipes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/recipes-detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "73c1694a-6169-45b3-a70e-6536b9c7f907",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"value contains recipes array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.recipes).to.be.an('array')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/recipes-detail",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipes-detail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/recipes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "78e0ec65-5401-46bd-8085-7f587f2bf682",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"value contains recipe\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.recipe).to.be.an('object');\r",
+									"    pm.globals.set(\"recipe_id\", jsonData.recipe.id);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"recipe\": {\r\n        \"recipeTitle\": \"Pancakes from user\",\r\n        \"ingredients\": [\r\n            {\"name\": \"pancake mix\", \"quantity\": 1, \"unit\": \"cup\"},\r\n            {\"name\": \"water or milk\", \"quantity\": \"2/3\", \"unit\": \"cup\"}\r\n        ],\r\n        \"instructions\": \"Whisk together pancake mix and water. Let batter sit for 2 minutes. Heat pancake griddle to 375F. Pour in batter. Cook for 1-1.5 minutes per side\"\r\n    },\r\n    \"owner\": \"user@recipeorganizer.com\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/recipes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/recipes/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b701d4ee-e187-4573-9c51-0efe0e547655",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"recipeTitle\": \"Pancakes for user\",\r\n    \"ingredients\": [\r\n        {\"name\": \"pancake mix\", \"quantity\": 1, \"unit\": \"cup\"},\r\n        {\"name\": \"water\", \"quantity\": \"2/3\", \"unit\": \"cup\"}\r\n    ],\r\n    \"instructions\": \"Whisk together pancake mix and water. Let batter sit for 2 minutes. Heat pancake griddle to 375F. Pour in batter. Cook for 1-1.5 minutes per side\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/recipes/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/recipes/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "801eca23-0850-4cc4-94a1-296282687748",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/recipes/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InZyaldpbFVLR1NFQ1pqUmZ3Uml6aCJ9.eyJpc3MiOiJodHRwczovL2pjaGVuYXBwLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZWRlN2EwYzA3OTMwODAwMTMyNjAxYjMiLCJhdWQiOlsiaHR0cDovLzEyNy4wLjAuMTo1MDAwIiwiaHR0cHM6Ly9qY2hlbmFwcC5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNTkyOTY2Njg2LCJleHAiOjE1OTMwNTMwODYsImF6cCI6IjJ0U2ZWemp6RDJkYXZUOExMVDI5N3ppdkJIeDczUEpSIiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInBlcm1pc3Npb25zIjpbImdldDpyZWNpcGVzLWRldGFpbCIsInBvc3Q6cmVjaXBlIl19.mob7Ebti0gXDkoc7pHe2xAA-JFTdue-B9KG0ivXpHxQqlnXrfTvkenSah9sK_LyLdW-xJFeQQcO_ieK3gInGvBxeRxd7bOe8iwXD0am3ca-5TRRdQCt7xn0pAne5SAzLzKq-RPv6l53KMJRdU7Rxrj1eJEhhI8XHONYEajt91VbxOSYH_Ame8zfPNpa8weP2htUSOiUYiB96DApjzQCk45-Tz2B_5vgoFYOyLciw8SJe8kDRC-hTmrMGj3GMqTuKxLzgX_kSad3nhJ6fxzdqW2FJ98LY689a_MsloETRnSQgg9gpAMidbPq_TQa8LUCp-iHl4jfdjczCSZGfe_oYHA",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b6d3d998-c830-4591-8191-74816b985400",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b7db5991-7616-49bb-8312-4136860c9745",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "/recipes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d9b4cfff-3752-4cae-8271-5f2bcc3fa584",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"value contains recipes array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.recipes).to.be.an('array')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/recipes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/recipes-detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f15e1cd9-9e1f-4160-be59-e054ec65e87a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"value contains recipes array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.recipes).to.be.an('array')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/recipes-detail",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipes-detail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/recipes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e47f29fc-28c0-4223-8fdb-2992a12319c0",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"value contains recipe\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.recipe).to.be.an('object');\r",
+									"    pm.globals.set(\"recipe_id\", jsonData.recipe.id);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"recipe\": {\r\n        \"recipeTitle\": \"Pancakes from admin\",\r\n        \"ingredients\": [\r\n            {\"name\": \"pancake mix\", \"quantity\": 1, \"unit\": \"cup\"},\r\n            {\"name\": \"water or milk\", \"quantity\": \"2/3\", \"unit\": \"cup\"}\r\n        ],\r\n        \"instructions\": \"Whisk together pancake mix and water. Let batter sit for 2 minutes. Heat pancake griddle to 375F. Pour in batter. Cook for 1-1.5 minutes per side\"\r\n    },\r\n    \"owner\": \"admin@recipeorganizer.com\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/recipes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/recipes/{{recipe_id}}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f7ab9f04-4893-40ed-aa63-950c74894c1d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"value contains recipe\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.recipe).to.be.an('object');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"recipeTitle\": \"Pancakes for Admin\",\r\n    \"ingredients\": [\r\n        {\"name\": \"pancake mix\", \"quantity\": 1, \"unit\": \"cup\"},\r\n        {\"name\": \"water\", \"quantity\": \"2/3\", \"unit\": \"cup\"}\r\n    ],\r\n    \"instructions\": \"Whisk together pancake mix and water. Let batter sit for 2 minutes. Heat pancake griddle to 375F. Pour in batter. Cook for 1-1.5 minutes per side\"\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/recipes/{{recipe_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipes",
+								"{{recipe_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/recipes/{{recipe_id}}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6f3922c7-82d9-4dc2-962c-3735eae8763e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"value equals provided id\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.delete).to.eql(pm.globals.get(\"recipe_id\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/recipes/{{recipe_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"recipes",
+								"{{recipe_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InZyaldpbFVLR1NFQ1pqUmZ3Uml6aCJ9.eyJpc3MiOiJodHRwczovL2pjaGVuYXBwLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZWRmZDMyMjIyOWRjZTAwMTNkYjE5YjMiLCJhdWQiOlsiaHR0cDovLzEyNy4wLjAuMTo1MDAwIiwiaHR0cHM6Ly9qY2hlbmFwcC5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNTkyOTQ3OTYxLCJleHAiOjE1OTMwMzQzNjEsImF6cCI6IjJ0U2ZWemp6RDJkYXZUOExMVDI5N3ppdkJIeDczUEpSIiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTpyZWNpcGUiLCJnZXQ6cmVjaXBlcy1kZXRhaWwiLCJwYXRjaDpyZWNpcGVzIiwicG9zdDpyZWNpcGUiXX0.mi8fwcdjKHQX5mv5J3EI6MnZss06EqzH-KI4Hp_S8YOybsmwBk6CdUCKAT9Nu1pZb6jfMJE_csEoAztJnL39e3T22Ef66H82EODi9Vkaw87PqJKh6rOzzqU2_q7B-3RoeawL-3y2JJpbD6nPApblFCe5EHS3QBDLnz8xKq14lANAwL6NltrLVK_zvpAmrRrPkJtcCtFuKbTVjUmxuCooJKXABmHBehVLLElv9-h095gwsVeWQrXKpZnljP26kBu1zFuOW68qnZ0Xs3Ch8uVb17yTlp5sx9ySPgpHOjIAMPK-8K7Ueia8Fuw-0Lpfj9Q_ZAox1E2-byjVfLXiP8zOYg",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3fb6c927-44f3-4824-8718-edcf5e7df1dc",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "18fb06bc-2f62-4665-8117-c643fcf92a6f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "e69e4bbe-ebce-418b-aa4c-ea813cca9bcb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "12a9c310-6484-4463-9805-113802f605b4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "a90d015f-7920-4d1f-9e1b-031b3fa6afbe",
+			"key": "host",
+			"value": "https://recipe-organizer-api.herokuapp.com/",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
