@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Recipe Organizer",
+  "name": "An app for organizing your recipes",
   "icons": [
     {
       "src": "favicon.ico",

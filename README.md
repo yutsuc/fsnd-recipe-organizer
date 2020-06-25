@@ -1,7 +1,5 @@
 # Recipe Organizer
 
-
-
 ## Motivation
 
 Besides coding, I bake a lot. Sometimes I find it difficult to track and make changes to the recipe. I have decided to solve this problem by creating my own recipe organizer!
@@ -18,16 +16,24 @@ This application has the following functions:
 Users can:
 * `get:recipes-detail`
 * `post:recipe`
+* `patch:recipes`
+* test account with User role:
+    * user@jchenapp-test-users.com
+    * jchen@ppTestUser
 
 Admins can:
 * `get:recipes-detail`
 * `post:recipe`
-* `patch:recipes`
 * `delete:recipe`
+* test account with Admin role:
+    * admin@jchenapp-test-users.com
+    * jchen@ppTestAdmin
 
 ## About the Stack
 
 ### Frontend
+
+Hosted on https://my-recipe-organizer.herokuapp.com
 
 React-based. More information on how to run the dev server can be found: [`./frontend/`](./frontend/README.md)
 
