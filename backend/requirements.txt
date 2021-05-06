@@ -1,4 +1,4 @@
-Flask_Cors==3.0.8
+Flask_Cors==3.0.9
 python_jose==3.1.0
 Flask==1.0.2
 Flask-Script==2.0.6
