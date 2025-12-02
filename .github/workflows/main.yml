@@ -21,6 +21,7 @@ jobs:
       # 1. Remove package-lock.json
       # 2. Run npm install --package-lock-only
       - name: Regenerate Lockfile
+        working-directory: ./frontend
         run: |
           echo "Removing package-lock.json..."
           rm -f package-lock.json
@@ -35,7 +36,7 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           
           # Stage the new lockfile
-          git add package-lock.json
+          git add frontend/package-lock.json
           
           # Check if there are actual changes before committing
           if git diff --staged --quiet; then
